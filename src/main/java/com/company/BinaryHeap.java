@@ -9,9 +9,9 @@ import java.util.Arrays;
  * Created by pss on 13.06.17.
  */
 public class BinaryHeap {
-    final static int DEFAULT_CAPACITY = 16;
-    Node[] anArray;
-    int anArraySize;
+    private final static int DEFAULT_CAPACITY = 16;
+    private Node[] nodes;
+    private int arraySize;
 
     private class Node {
         String nodeData;
@@ -38,13 +38,13 @@ public class BinaryHeap {
     }
 
     public BinaryHeap(int arraySize) {
-        anArray = new Node[arraySize];
-        anArraySize = -1;
+        nodes = new Node[arraySize];
+        this.arraySize = -1; //TODO = 0
     }
 
     @Override
     public String toString() {
-        return "{" + Arrays.toString(anArray) + "}";
+        return "{" + Arrays.toString(nodes) + "}";
     }
 
     public BinaryHeap() {
@@ -52,13 +52,13 @@ public class BinaryHeap {
     }
 
     public void addNewNode(String nodeData, int nodeID) {
-        anArraySize++;
+        arraySize++;
 
-        if (anArraySize >= anArray.length) {
+        if (arraySize >= nodes.length) {
             growAnArrayUp();
         }
 
-        anArray[anArraySize] = new Node(nodeData, nodeID);
+        nodes[arraySize] = new Node(nodeData, nodeID);
 
         goUp();
 
@@ -67,9 +67,9 @@ public class BinaryHeap {
 
     private void goUp() {
 
-        int i = anArraySize;
+        int i = arraySize;
         int parent = getParent(i);
-        while (i >= 0 && anArray[i].getNodeID() > anArray[parent].getNodeID()) {
+        while (i >= 0 && nodes[i].getNodeID() > nodes[parent].getNodeID()) {
             swapNodes(i, parent);
             i = parent;
             parent = getParent(i);
@@ -78,14 +78,14 @@ public class BinaryHeap {
     }
 
     public String getTopNode() {
-        if (anArraySize < 0) {
+        if (arraySize < 0) {
             throw new IllegalStateException("Heap is empty");
         }
 
-        Node n = anArray[0];
-        anArray[0] = anArray[anArraySize];
-        anArray[anArraySize] = null;
-        anArraySize--;
+        Node n = nodes[0];
+        nodes[0] = nodes[arraySize];
+        nodes[arraySize] = null;
+        arraySize--;
 
         goDown();
         return n.getData();
@@ -99,19 +99,19 @@ public class BinaryHeap {
         int rightChild;
         int largerChild;
 
-        while (i < (anArraySize + 1) / 2) {
+        while (i < (arraySize + 1) / 2) {
             leftChild = 2 * i + 1;
             rightChild = 2 * i + 2;
 
             //If Right child presents Left presents also
-            if (rightChild <= anArraySize && anArray[rightChild].getNodeID() > anArray[leftChild].getNodeID()) {
+            if (rightChild <= arraySize && nodes[rightChild].getNodeID() > nodes[leftChild].getNodeID()) {
                 largerChild = rightChild;
             } else {
                 largerChild = leftChild;
             }
 
             //If the largest in the top -> stop
-            if (anArray[i].getNodeID() >= anArray[largerChild].getNodeID()) {
+            if (nodes[i].getNodeID() >= nodes[largerChild].getNodeID()) {
                 break;
             }
 
@@ -124,9 +124,9 @@ public class BinaryHeap {
     }
 
     private void swapNodes(int i, int j) {
-        Node t = anArray[i];
-        anArray[i] = anArray[j];
-        anArray[j] = t;
+        Node t = nodes[i];
+        nodes[i] = nodes[j];
+        nodes[j] = t;
     }
 
     private int getParent(int i) {
@@ -134,7 +134,7 @@ public class BinaryHeap {
     }
 
     private void growAnArrayUp() {
-        anArray = Arrays.copyOf(anArray, anArray.length * 2);
+        nodes = Arrays.copyOf(nodes, nodes.length * 2);
     }
 
 }
