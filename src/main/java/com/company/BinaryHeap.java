@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class BinaryHeap {
     private final static int DEFAULT_CAPACITY = 16;
     private Node[] nodes;
-    private int arraySize;
+    private int size;
 
     private class Node {
         String nodeData;
@@ -39,7 +39,7 @@ public class BinaryHeap {
 
     public BinaryHeap(int arraySize) {
         nodes = new Node[arraySize];
-        this.arraySize = -1; //TODO = 0
+        this.size = 0;
     }
 
     @Override
@@ -52,13 +52,13 @@ public class BinaryHeap {
     }
 
     public void addNewNode(String nodeData, int nodeID) {
-        arraySize++;
 
-        if (arraySize >= nodes.length) {
+        if (size >= nodes.length) {
             growAnArrayUp();
         }
 
-        nodes[arraySize] = new Node(nodeData, nodeID);
+        nodes[size] = new Node(nodeData, nodeID);
+        size++;
 
         goUp();
 
@@ -67,9 +67,9 @@ public class BinaryHeap {
 
     private void goUp() {
 
-        int i = arraySize;
+        int i = size - 1;
         int parent = getParent(i);
-        while (i >= 0 && nodes[i].getNodeID() > nodes[parent].getNodeID()) {
+        while (i > 0 && nodes[i].getNodeID() > nodes[parent].getNodeID()) {
             swapNodes(i, parent);
             i = parent;
             parent = getParent(i);
@@ -77,15 +77,15 @@ public class BinaryHeap {
 
     }
 
-    public String getTopNode() {
-        if (arraySize < 0) {
+    public String popTopNode() {
+        if (nodes[0] == null) {
             throw new IllegalStateException("Heap is empty");
         }
 
+        size--;
         Node n = nodes[0];
-        nodes[0] = nodes[arraySize];
-        nodes[arraySize] = null;
-        arraySize--;
+        nodes[0] = nodes[size];
+        nodes[size] = null;
 
         goDown();
         return n.getData();
@@ -99,12 +99,12 @@ public class BinaryHeap {
         int rightChild;
         int largerChild;
 
-        while (i < (arraySize + 1) / 2) {
+        while (i < size / 2) {
             leftChild = 2 * i + 1;
             rightChild = 2 * i + 2;
 
             //If Right child presents Left presents also
-            if (rightChild <= arraySize && nodes[rightChild].getNodeID() > nodes[leftChild].getNodeID()) {
+            if (rightChild <= size - 1 && nodes[rightChild].getNodeID() > nodes[leftChild].getNodeID()) {
                 largerChild = rightChild;
             } else {
                 largerChild = leftChild;

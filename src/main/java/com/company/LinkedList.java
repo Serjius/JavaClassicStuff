@@ -187,8 +187,8 @@ public class LinkedList {
         }
     }
 
-    //Count
-    public int count() {
+    //Szie
+    public int size() {
         Node node = headNode;
         int size = 0;
         while (node != null) {

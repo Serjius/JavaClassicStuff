@@ -69,13 +69,13 @@ public class BinaryHeapTest {
         bh.addNewNode("F", 11);
         bh.addNewNode("G", 8);
 
-        assertEquals("B", bh.getTopNode());
-        assertEquals("D", bh.getTopNode());
-        assertEquals("E", bh.getTopNode());
-        assertEquals("F", bh.getTopNode());
-        assertEquals("G", bh.getTopNode());
-        assertEquals("A", bh.getTopNode());
-        assertEquals("C", bh.getTopNode());
+        assertEquals("B", bh.popTopNode());
+        assertEquals("D", bh.popTopNode());
+        assertEquals("E", bh.popTopNode());
+        assertEquals("F", bh.popTopNode());
+        assertEquals("G", bh.popTopNode());
+        assertEquals("A", bh.popTopNode());
+        assertEquals("C", bh.popTopNode());
     }
 
 

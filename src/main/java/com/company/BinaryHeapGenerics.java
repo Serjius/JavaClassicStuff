@@ -9,17 +9,17 @@ import java.util.Arrays;
  */
 public class BinaryHeapGenerics<T extends Comparable<T>> {
     final static int DEFAULT_CAPACITY = 16;
-    Object[] anArray;
-    int anArraySize;
+    Object[] array;
+    int size;
 
     public BinaryHeapGenerics(int arraySize) {
-        anArray = new Object[arraySize];
-        anArraySize = -1;
+        array = new Object[arraySize];
+        size = 0;
     }
 
     @Override
     public String toString() {
-        return "{" + Arrays.toString(anArray) + "}";
+        return "{" + Arrays.toString(array) + "}";
     }
 
     public BinaryHeapGenerics() {
@@ -27,13 +27,13 @@ public class BinaryHeapGenerics<T extends Comparable<T>> {
     }
 
     public void addNewNode(T n) {
-        anArraySize++;
 
-        if (anArraySize >= anArray.length) {
+        if (size >= array.length) {
             growAnArrayUp();
         }
 
-        anArray[anArraySize] = n;
+        array[size] = n;
+        size++;
 
         goUp();
 
@@ -42,9 +42,9 @@ public class BinaryHeapGenerics<T extends Comparable<T>> {
 
     private void goUp() {
 
-        int i = anArraySize;
+        int i = size-1;
         int parent = getParent(i);
-        while (i >= 0 && ((T) anArray[i]).compareTo((T) anArray[parent]) > 0) {
+        while (i > 0 && ((T) array[i]).compareTo((T) array[parent]) > 0) {
             swapNodes(i, parent);
             i = parent;
             parent = getParent(i);
@@ -53,14 +53,14 @@ public class BinaryHeapGenerics<T extends Comparable<T>> {
     }
 
     public T getTopNode() {
-        if (anArraySize < 0) {
+        if (array[0] == null) {
             throw new IllegalStateException("Heap is empty");
         }
 
-        T n = (T) anArray[0];
-        anArray[0] = anArray[anArraySize];
-        anArray[anArraySize] = null;
-        anArraySize--;
+        size--;
+        T n = (T) array[0];
+        array[0] = array[size];
+        array[size] = null;
 
         goDown();
         return n;
@@ -74,19 +74,19 @@ public class BinaryHeapGenerics<T extends Comparable<T>> {
         int rightChild;
         int largerChild;
 
-        while (i < (anArraySize + 1) / 2) {
+        while (i < (size) / 2) {
             leftChild = 2 * i + 1;
             rightChild = 2 * i + 2;
 
             //If Right child presents Left presents also
-            if (rightChild <= anArraySize && ((T) anArray[rightChild]).compareTo((T) anArray[leftChild]) > 0) {
+            if (rightChild <= size-1 && ((T) array[rightChild]).compareTo((T) array[leftChild]) > 0) {
                 largerChild = rightChild;
             } else {
                 largerChild = leftChild;
             }
 
             //If the largest in the top -> stop
-            if ( ((T) anArray[i]).compareTo((T)anArray[largerChild])>0) {
+            if ( ((T) array[i]).compareTo((T) array[largerChild])>0) {
                 break;
             }
 
@@ -99,9 +99,9 @@ public class BinaryHeapGenerics<T extends Comparable<T>> {
     }
 
     private void swapNodes(int i, int j) {
-        T t = (T)anArray[i];
-        anArray[i] = anArray[j];
-        anArray[j] = t;
+        T t = (T) array[i];
+        array[i] = array[j];
+        array[j] = t;
     }
 
     private int getParent(int i) {
@@ -109,7 +109,7 @@ public class BinaryHeapGenerics<T extends Comparable<T>> {
     }
 
     private void growAnArrayUp() {
-        anArray = Arrays.copyOf(anArray, anArray.length * 2);
+        array = Arrays.copyOf(array, array.length * 2);
     }
 
 }

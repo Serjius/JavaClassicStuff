@@ -280,7 +280,7 @@ public class LinkedListTests {
     @Test
     public void testCountEmptyList() {
         LinkedList emptyList = new LinkedList();
-        assertEquals("Empty list", 0, emptyList.count());
+        assertEquals("Empty list", 0, emptyList.size());
     }
 
     @Test
@@ -289,6 +289,6 @@ public class LinkedListTests {
         normalList.addNodeToTheEnd("First", 1);
         normalList.addNodeToTheEnd("Second", 2);
         normalList.addNodeToTheEnd("Threed", 3);
-        assertEquals("Regular list", 3, normalList.count());
+        assertEquals("Regular list", 3, normalList.size());
     }
 }
