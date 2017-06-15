@@ -13,10 +13,10 @@ public class QuickSort {
 
     private static void quickSort(int[] array, int start, int finish) {
         if (start < finish) {
-            int pivot = array[(start + finish) / 2];
+            int pivot = array[(finish + start) / 2];
             int left = start;
             int right = finish;
-            while (left <= right) {
+            while (left < right) {
                 while (array[left] < pivot) {
                     left++;
                 }
@@ -27,7 +27,7 @@ public class QuickSort {
                 if (left <= right) {
                     swap(array, left, right);
                     left++;
-                    right++;
+                    right--;
                 }
 
             }
