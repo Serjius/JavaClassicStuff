@@ -7,35 +7,56 @@ package com.company;
  */
 public class QuickSort {
 
-    public static void sort(int[] array) {
-        quickSort(array, 0, array.length - 1);
+    public static void sortAsc(int[] array) {
+        quickSortAsc(array, 0, array.length - 1);
     }
 
-    private static void quickSort(int[] array, int start, int finish) {
-        if (start < finish) {
-            int pivot = array[(finish + start) / 2];
-            int left = start;
-            int right = finish;
-            while (left < right) {
-                while (array[left] < pivot) {
-                    left++;
-                }
-                while (array[right] > pivot) {
-                    right--;
-                }
+    public static void sortDesc(int[] array) {
+        quickSortDesc(array, 0, array.length - 1);
+    }
 
-                if (left <= right) {
-                    swap(array, left, right);
-                    left++;
-                    right--;
+    private static void quickSortDesc(int[] array, int s, int f) {
+        while (s < f) {
+            int l = s;
+            int r = f;
+            int p = array[(l + r) / 2];
+            while (l < r) {
+                while (array[l] > p) {
+                    l++;
                 }
-
+                while (array[r] < p) {
+                    r--;
+                }
+                if (l < r) {
+                    swap(array, l, r);
+                }
+                quickSortDesc(array, s, r-1);
+                quickSortDesc(array, l+1, f);
             }
-            quickSort(array, start, right);
-            quickSort(array, left, finish);
-
         }
+    }
 
+    private static void quickSortAsc(int[] array, int start, int finish) {
+        if (start < finish) {
+            int l = start;
+            int r = finish;
+            int pivot = array[(start + finish) / 2];
+            while (l < r) {
+                while (array[l] < pivot) {
+                    l++;
+                }
+                while (array[r] > pivot) {
+                    r--;
+                }
+                if (l <= r) {
+                    swap(array, l, r);
+                    l++;
+                    r--;
+                }
+                quickSortAsc(array, start, r);
+                quickSortAsc(array, l, finish);
+            }
+        }
     }
 
     private static void swap(int[] array, int i, int j) {
