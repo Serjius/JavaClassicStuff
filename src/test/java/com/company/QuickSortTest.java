@@ -22,10 +22,10 @@ public class QuickSortTest {
     }
     @Test
     public void testSortDesc() {
-        int[] a = {1, 2, 19};
+        int[] a = {1, 2, 19, 23, 12, 11, 33, 5, 4, 5, 5, 5, 5, 5};
         QuickSort.sortDesc(a);
 
-        assertEquals("[1, 2, 4, 5, 5, 5, 5, 5, 5, 11, 12, 19, 23, 33]", Arrays.toString(a));
+        assertEquals("[33, 23, 19, 12, 11, 5, 5, 5, 5, 5, 5, 4, 2, 1]", Arrays.toString(a));
 
 
     }
