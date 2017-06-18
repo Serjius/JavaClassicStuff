@@ -16,7 +16,7 @@ public class QuickSort {
     }
 
     private static void quickSortDesc(int[] array, int s, int f) {
-        while (s < f) {
+        if (s < f) {
             int l = s;
             int r = f;
             int p = array[(l + r) / 2];
@@ -27,12 +27,14 @@ public class QuickSort {
                 while (array[r] < p) {
                     r--;
                 }
-                if (l < r) {
+                if (l <= r) {
                     swap(array, l, r);
+                    l++;
+                    r--;
                 }
-                quickSortDesc(array, s, r-1);
-                quickSortDesc(array, l+1, f);
             }
+            if (s < r) quickSortAsc(array, s, r);
+            if (l < f) quickSortAsc(array, l, f);
         }
     }
 
@@ -53,9 +55,9 @@ public class QuickSort {
                     l++;
                     r--;
                 }
-                quickSortAsc(array, start, r);
-                quickSortAsc(array, l, finish);
             }
+            if (start < r) quickSortAsc(array, start, r);
+            if (l < finish) quickSortAsc(array, l, finish);
         }
     }
 
