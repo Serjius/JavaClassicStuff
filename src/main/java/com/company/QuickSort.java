@@ -10,45 +10,37 @@ import java.util.Arrays;
 public class QuickSort {
 
     public static void sortAsc(int[] array) {
-        quickSortAsc(array, 0, array.length - 1);
+        quickSort(array, 0, array.length - 1, true);
     }
 
     public static void sortDesc(int[] array) {
-        quickSortDesc(array, 0, array.length - 1);
+        quickSort(array, 0, array.length - 1, false);
     }
 
-    private static void quickSortDesc(int[] array, int s, int f) {
+    private static void quickSort(int[] array, int s, int f, boolean isAsc) {
         int l = s;
         int r = f;
         int p = array[(l + r) / 2];
         while (l < r) {
-            while (array[l] > p) l++;
-            while (array[r] < p) r--;
-            if (l <= r) {
-                swap(array, l, r);
-                l++;
-                r--;
+            if (isAsc) {
+                while (array[l] < p) l++;
+            } else {
+                while (array[l] > p) l++;
             }
-        }
-        if (s < r) quickSortDesc(array, s, r);
-        if (l < f) quickSortDesc(array, l, f);
-    }
+            if (isAsc) {
+                while (array[r] > p) r--;
+            } else {
+                while (array[r] < p) r--;
+            }
 
-    private static void quickSortAsc(int[] array, int start, int finish) {
-        int l = start;
-        int r = finish;
-        int pivot = array[(start + finish) / 2];
-        while (l < r) {
-            while (array[l] < pivot) l++;
-            while (array[r] > pivot) r--;
             if (l <= r) {
                 swap(array, l, r);
                 l++;
                 r--;
             }
         }
-        if (start < r) quickSortAsc(array, start, r);
-        if (l < finish) quickSortAsc(array, l, finish);
+        if (s < r) quickSort(array, s, r, isAsc);
+        if (l < f) quickSort(array, l, f, isAsc);
     }
 
     private static void swap(int[] array, int i, int j) {
